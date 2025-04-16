@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get "message/index"
+  get "message/show"
+  get "user/index"
+  get "user/show"
+  get "chat/index"
+  get "chat/show"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -11,4 +17,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :users, controller: "users"
+  resources :messages, controller: "messages"
+  resources :chats, controller: "chats"
+
 end

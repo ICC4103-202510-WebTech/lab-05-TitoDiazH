@@ -1,0 +1,27 @@
+<h1 class="text-center">Chats</h1>
+
+<div class="table-responsive">
+    <table class="table table-success table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Sender</th>
+                <th>Reciever</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% @chats.each do |chat| %>
+                <tr>
+                <td><%= chat.sender_id %></td>
+                <td><%= chat.reciever_id %></td>
+                <td>
+                    <%= link_to 'View', chat_path(chat), class: 'btn btn-primary btn-sm' %>
+                </td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+  

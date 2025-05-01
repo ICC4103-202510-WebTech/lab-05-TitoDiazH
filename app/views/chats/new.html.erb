@@ -1,0 +1,35 @@
+<h1 class="mb-4">New Chat</h1>
+
+<%= form_with(model: @chat, local: true, html: { id: "chatForm" }) do |f| %>
+  <% users = User.all.map { |u| ["#{u.first_name} #{u.last_name}", u.id] } %>
+
+  <div class="mb-3">
+    <%= f.label :sender_id, class: "form-label" %>
+    <%= f.select :sender_id, users, { prompt: "Select sender" }, class: "form-select", id: "senderSelect" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :receiver_id, class: "form-label" %>
+    <%= f.select :receiver_id, users, { prompt: "Select receiver" }, class: "form-select", id: "receiverSelect" %>
+  </div>
+
+  <div id="errorMessage" class="alert alert-danger d-none">
+    Sender and receiver cannot be the same.
+  </div>
+
+  <%= f.submit "Create Chat", class: "btn btn-primary" %>
+<% end %>
+
+<script>
+  document.getElementById("chatForm").addEventListener("submit", function(e) {
+    const s = document.getElementById("senderSelect").value;
+    const r = document.getElementById("receiverSelect").value;
+    const error = document.getElementById("errorMessage");
+    if (s && r && s === r) {
+      e.preventDefault();
+      error.classList.remove("d-none");
+    } else {
+      error.classList.add("d-none");
+    }
+  });
+</script>

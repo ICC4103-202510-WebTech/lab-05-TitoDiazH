@@ -5,7 +5,7 @@
         <thead class="thead-dark">
             <tr>
                 <th>Sender</th>
-                <th>Reciever</th>
+                <th>receiver</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -14,7 +14,7 @@
             <% @chats.each do |chat| %>
                 <tr>
                 <td><%= chat.sender_id %></td>
-                <td><%= chat.reciever_id %></td>
+                <td><%= chat.receiver_id %></td>
                 <td>
                     <%= link_to 'View', chat_path(chat), class: 'btn btn-primary btn-sm' %>
                 </td>
@@ -22,6 +22,9 @@
             <% end %>
         </tbody>
     </table>
+    <div class="text-center">
+        <%= link_to 'New', new_chat_path, class: 'btn btn-secondary' %>
+    </div>
 </div>
 
   

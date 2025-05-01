@@ -1,0 +1,23 @@
+<h1 class="mb-4">New Message</h1>
+
+<% chats = Chat.all.map { |c| ["Chat ##{c.id}", c.id] } %>
+<% users = User.all.map { |u| ["#{u.first_name} #{u.last_name}", u.id] } %>
+
+<%= form_with model: @message, local: true do |f| %>
+  <div class="mb-3">
+    <%= f.label :chat_id, "Chat", class: "form-label" %>
+    <%= f.select :chat_id, chats, { prompt: "Select chat" }, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :user_id, "Author", class: "form-label" %>
+    <%= f.select :user_id, users, { prompt: "Select author" }, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :body, "Message", class: "form-label" %>
+    <%= f.text_area :body, class: "form-control", rows: 4 %>
+  </div>
+
+  <%= f.submit "Send Message", class: "btn btn-primary" %>
+<% end %>

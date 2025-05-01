@@ -8,45 +8,37 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # db/seeds.rb
-
-characters = [
-  { first_name: 'Eric', last_name: 'Cartman' },
-  { first_name: 'Stan', last_name: 'Marsh' },
-  { first_name: 'Kyle', last_name: 'Broflovski' },
-  { first_name: 'Kenny', last_name: 'McCormick' },
-  { first_name: 'Butters', last_name: 'Stotch' },
-  { first_name: 'Wendy', last_name: 'Testaburger' },
-  { first_name: 'Randy', last_name: 'Marsh' },
-  { first_name: 'Mr.', last_name: 'Mackey' },
-  { first_name: 'Chef', last_name: 'Chef' },
-  { first_name: 'Jimmy', last_name: 'Valmer' }
-]
-
-User.destroy_all
-Chat.destroy_all
-Message.destroy_all
-
-users = characters.map.with_index do |char, i|
-  User.create!(
-    email: "#{char[:first_name].downcase}.#{char[:last_name].downcase}@gmail.com",
-    first_name: char[:first_name],
-    last_name: char[:last_name]
-  )
-end
-
-
-10.times do
-  sender = users.sample
-  reciever = (users - [sender]).sample
-  Chat.create!(sender_id: sender.id, reciever_id: reciever.id)
-end
+fist_names = ['Eric', 'Stan', 'Kyle', 'Kenny', 'Butters', 'Wendy', 'Randy', 'Mr.', 'Chef', 'Jimmy']
+last_names = ['Cartman', 'Marsh', 'Broflovski', 'McCormick', 'Stotch', 'Testaburger', 'Marsh', 'Mackey', 'Chef', 'Valmer']
 
 
 10.times do |i|
+  User.create!(
+    email: "user#{i + 1}@example.com",
+    first_name: fist_names.sample,
+    last_name: last_names.sample
+  )
+end
+users = User.all
+10.times do |i|
+  sender = users.sample
+  receiver = users.where.not(id: sender.id ).sample
+
+  Chat.create!(
+    sender_id: sender.id,
+    receiver_id: receiver.id
+  )
+end
+
+chats = Chat.all
+
+10.times do |i|
+    chat = chats.sample
+    user = chat.sender
     Message.create!(
-        chat_id: rand(1..10),
-        user_id: rand(1..10),
-        body: "Message n° #{i + 1}"
-    )
+        chat_id: chat.id,
+        user_id: user.id,
+        body: "This is a message number #{i + 1} 
+        ")
 end
 

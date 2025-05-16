@@ -8,37 +8,43 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 # db/seeds.rb
-fist_names = ['Eric', 'Stan', 'Kyle', 'Kenny', 'Butters', 'Wendy', 'Randy', 'Mr.', 'Chef', 'Jimmy']
-last_names = ['Cartman', 'Marsh', 'Broflovski', 'McCormick', 'Stotch', 'Testaburger', 'Marsh', 'Mackey', 'Chef', 'Valmer']
 
+# Limpia los datos existentes para evitar duplicados
+Message.delete_all
+Chat.delete_all
+User.delete_all
 
-10.times do |i|
-  User.create!(
+first_names = ['Eric', 'Stan', 'Kyle', 'Kenny', 'Butters', 'Wendy', 'Randy', 'Mr.', 'Chef', 'Jimmy']
+last_names  = ['Cartman', 'Marsh', 'Broflovski', 'McCormick', 'Stotch', 'Testaburger', 'Marsh', 'Mackey', 'Chef', 'Valmer']
+
+# Crea usuarios con nombres y apellidos alineados por posición
+users = []
+first_names.each_with_index do |first_name, i|
+  users << User.create!(
     email: "user#{i + 1}@example.com",
-    first_name: fist_names.sample,
-    last_name: last_names.sample
+    first_name: first_name,
+    last_name: last_names[i]
   )
 end
-users = User.all
-10.times do |i|
-  sender = users.sample
-  receiver = users.where.not(id: sender.id ).sample
 
-  Chat.create!(
+# Crea chats entre usuarios (evita que un usuario chatee consigo mismo)
+chats = []
+users.each_with_index do |sender, i|
+  receiver = users[(i + 1) % users.size] # siguiente usuario en la lista
+  chats << Chat.create!(
     sender_id: sender.id,
     receiver_id: receiver.id
   )
 end
 
-chats = Chat.all
-
+# Crea mensajes en los chats
 10.times do |i|
-    chat = chats.sample
-    user = chat.sender
-    Message.create!(
-        chat_id: chat.id,
-        user_id: user.id,
-        body: "This is a message number #{i + 1} 
-        ")
+  chat = chats.sample
+  user = chat.sender
+  Message.create!(
+    chat_id: chat.id,
+    user_id: user.id,
+    body: "This is message number #{i + 1}"
+  )
 end
 

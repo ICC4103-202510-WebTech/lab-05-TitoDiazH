@@ -2,7 +2,7 @@
 
 <div class="table-responsive">
     <table class="table table-success table-striped">
-        <thead class="thead-dark">
+        <thead class="thead-dark text-center">
             <tr>
                 <th>Sender</th>
                 <th>receiver</th>
@@ -10,20 +10,21 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody class="text-center">
             <% @chats.each do |chat| %>
                 <tr>
                 <td><%= chat.sender_id %></td>
                 <td><%= chat.receiver_id %></td>
                 <td>
-                    <%= link_to 'View', chat_path(chat), class: 'btn btn-primary btn-sm' %>
+                    <%= link_to 'View', chat_path(chat), class: 'btn btn-success btn-sm' %>
+                    <%= link_to 'Edit', edit_chat_path(chat), class: 'btn btn-secondary btn-sm' %>
                 </td>
                 </tr>
             <% end %>
         </tbody>
     </table>
-    <div class="text-center">
-        <%= link_to 'New', new_chat_path, class: 'btn btn-secondary' %>
+    <div class="text-center mb-3">
+        <%= link_to 'New', new_chat_path, class: 'btn btn-success' %>
     </div>
 </div>
 

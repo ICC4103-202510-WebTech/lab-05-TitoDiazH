@@ -1,27 +1,45 @@
-<h1 class="text-center"><%="#{@user.first_name} #{@user.last_name}" %></h1>
-
-<div class="table-responsive">
-    <div class="table-responsive">
-        <table class="table table-success table-striped">
-            <tr>
-                <th>ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-            </tr>
-            <tr>
-                <td><%= @user.id %></td>
-                <td><%= @user.first_name %></td>
-                <td><%= @user.last_name %></td>
-                <td><%= @user.email %></td>
-                <td><%= @user.created_at %></td>
-                <td><%= @user.updated_at %></td>
-        </table>
-    </div>
+<h1 class="mb-4 text-center">User: <%= @user.first_name %> <%= @user.last_name %></h1>
+<div class="card mb-4 border-success">
+  <div class="card-body">
+    <h5 class="card-title text-success">Email</h5>
+    <p class="card-text"><%= @user.email %></p>
+  </div>
 </div>
 
-<div>
-    <%= link_to 'Return', users_path, class: 'btn btn-secondary' %>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card mb-4 border-success">
+      <div class="card-header bg-success text-white">
+        Chats Participated
+      </div>
+      <ul class="list-group list-group-flush">
+        <% (@user.sent_chats + @user.received_chats).uniq.each do |chat| %>
+          <li class="list-group-item">
+            Chat ID: <%= link_to chat.id, chat_path(chat) %>
+            <span class="text-muted">(Sender: <%= chat.sender.first_name %>, Receiver: <%= chat.receiver.first_name %>)</span>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card mb-4 border-success">
+      <div class="card-header bg-success text-white">
+        Sent Messages
+      </div>
+      <ul class="list-group list-group-flush">
+        <% @user.messages.each do |message| %>
+          <li class="list-group-item">
+            [Chat <%= link_to message.chat_id, chat_path(message.chat) %>]:
+            <%= message.body %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="text-center">
+  <%= link_to 'Back', users_path, class: 'btn btn-secondary' %>
+  <%= link_to 'Edit User', edit_user_path, class: 'btn btn-success' %>
 </div>

@@ -4,7 +4,7 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @Message = Message.find(params["id"])
+    @message = Message.find(params[:id])
   end
 
   def new
@@ -12,17 +12,30 @@ class MessagesController < ApplicationController
   end
 
   def create
-  @message = Message.new(message_params)
-  if @message.save
-      redirect_to @message, notice: 'User created successfully.'
-  else
+    @message = Message.new(message_params)
+    if @message.save
+      redirect_to @message, notice: 'Message created successfully.'
+    else
       render :new
+    end
   end
+
+  def edit
+    @message = Message.find(params[:id])
+  end
+
+  def update
+    @message = Message.find(params[:id])
+    if @message.update(message_params)
+      redirect_to @message, notice: 'Message was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private
-  def message_params
 
-  params.require(:message).permit(:chat_id, :user_id, :body)
+  def message_params
+    params.require(:message).permit(:chat_id, :user_id, :body)
   end
 end

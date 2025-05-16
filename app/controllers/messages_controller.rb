@@ -14,7 +14,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.save
-      redirect_to @message, notice: 'Message created successfully.'
+      redirect_to messages_path, notice: 'Message created successfully.'
     else
       render :new
     end

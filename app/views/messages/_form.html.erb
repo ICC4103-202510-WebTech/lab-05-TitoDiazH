@@ -8,7 +8,7 @@
     </ul>
   </div>
 <% end %>
-<%= form_with model: @message, local: true do |form| %>
+<%= form_with model: @message, local: true, data: { turbo: false } do |form| %>
   <div class="mb-3">
     <%= form.label :chat_id %>
     <%= form.number_field :chat_id %>
@@ -25,6 +25,10 @@
     <%= form.submit class: 'btn btn-success' %>
   </div>
   <div>
-  <%= link_to 'Back', message_path(message), class: 'btn btn-secondary' %>
+  <% if message.persisted? %>
+    <%= link_to 'Back', message_path(message), class: 'btn btn-secondary' %>
+  <% else %>
+    <%= link_to 'Back', messages_path, class: 'btn btn-secondary' %>
+  <% end %>
   </div>
 <% end %>

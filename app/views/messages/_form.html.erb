@@ -10,13 +10,12 @@
 <% end %>
 <%= form_with model: @message, local: true, data: { turbo: false } do |form| %>
   <div class="mb-3">
-    <%= form.label :chat_id %>
-    <%= form.number_field :chat_id %>
+    <%= form.label :chat %>
+    <%= form.collection_select :chat_id, @chats, :id, :chat_members, prompt: "Selecciona un chat" %>
   </div>
-  <div class="mb-3">
-    <%= form.label :user_id %>
-    <%= form.number_field :user_id %>
-  </div>
+
+  <%= form.hidden_field :user_id, value: current_user.id %>
+  
   <div class="mb-3">
     <%= form.label :body %>
     <%= form.text_area :body %>
@@ -25,10 +24,10 @@
     <%= form.submit class: 'btn btn-success' %>
   </div>
   <div>
-  <% if message.persisted? %>
-    <%= link_to 'Back', message_path(message), class: 'btn btn-secondary' %>
-  <% else %>
-    <%= link_to 'Back', messages_path, class: 'btn btn-secondary' %>
-  <% end %>
+    <% if message.persisted? %>
+      <%= link_to 'Back', message_path(message), class: 'btn btn-secondary' %>
+    <% else %>
+      <%= link_to 'Back', messages_path, class: 'btn btn-secondary' %>
+    <% end %>
   </div>
 <% end %>

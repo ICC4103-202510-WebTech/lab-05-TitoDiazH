@@ -9,13 +9,12 @@
   </div>
 <% end %>
 <%= form_with model: @chat, local: true, data: { turbo: false } do |form| %>
-  <div class="mb-3">
-    <%= form.label :sender_id %>
-    <%= form.number_field :sender_id %>
-  </div>
+
+  <%= form.hidden_field :sender_id, value: current_user.id %>
+
   <div class="mb-3">
     <%= form.label :receiver_id %>
-    <%= form.number_field :receiver_id %>
+    <%= form.collection_select :receiver_id, @users, :id, :full_name, prompt: "Selecciona un usuario" %>
   </div>
   <div class="mb-3">
     <%= form.submit class: 'btn btn-success' %>

@@ -12,7 +12,11 @@ class Chat < ApplicationRecord
     def different_sender_receiver
         if sender_id == receiver_id
             errors.add(:receiver_id, "sender_id and receiver_id cant be the same")
+        end
     end
-end
+
+    def chat_members
+        "#{sender.full_name} - #{receiver.full_name}"
+    end
 
 end

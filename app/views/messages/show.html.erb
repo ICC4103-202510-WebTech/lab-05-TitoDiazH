@@ -2,8 +2,10 @@
 
 <div class="card mb-4 border-success">
   <div class="card-body">
-    <h5 class="card-title text-success">Body</h5>
-    <p class="card-text"><%= @message.body %></p>
+    <% if can? :edit, @message %>
+      <h5 class="card-title text-success">Body</h5>
+      <p class="card-text"><%= @message.body %></p>
+    <% end %>
     <hr>
     <p>
         <strong>Chat:</strong>
@@ -23,5 +25,7 @@
 
 <div class="text-center">
   <%= link_to 'Back', messages_path, class: 'btn btn-secondary' %>
-  <%= link_to 'Edit Message', edit_message_path, class: 'btn btn-success' %>
+  <% if can? :edit, @message %>
+    <%= link_to 'Edit Message', edit_message_path, class: 'btn btn-success' %>
+  <% end %>
 </div>

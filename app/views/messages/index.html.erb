@@ -5,7 +5,7 @@
         <thead class="thead-dark text-center">
             <tr>
                 <th>Chat ID</th>
-                <th>User ID</th>
+                <th>User</th>
                 <th>Body</th>
                 <th>Actions</th>
             </tr>
@@ -13,15 +13,18 @@
 
         <tbody class="text-center">
             <% @messages.each do |message| %>
+                
+                <% if message.user == current_user %>
                 <tr>
-                <td><%= message.chat_id %></td>
-                <td><%= message.user_id %></td>
-                <td><%= message.body %></td>
-                <td>
-                    <%= link_to 'View', message_path(message), class: 'btn btn-success btn-sm' %>
-                    <%= link_to 'Edit', edit_message_path(message), class: 'btn btn-secondary btn-sm' %>
-                </td>
+                    <td><%= message.chat_id %></td>
+                    <td><%= "#{message.user.first_name} #{message.user.last_name}" %></td>
+                    <td><%= message.body %></td>
+                    <td>
+                        <%= link_to 'View', message_path(message), class: 'btn btn-success btn-sm' %>
+                        <%= link_to 'Edit', edit_message_path(message), class: 'btn btn-secondary btn-sm' %>
+                    </td>
                 </tr>
+                <% end %>
             <% end %>
         </tbody>
     </table>

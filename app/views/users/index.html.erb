@@ -21,15 +21,14 @@
                 <td><%= user.messages.count %></td>
                 <td>
                     <%= link_to 'View', user_path(user), class: 'btn btn-success btn-sm' %>
-                    <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-secondary btn-sm' %>
-                </tr>
+                    <% if can? :edit, user %>
+                      <%= link_to 'Edit', edit_user_path(user), class: 'btn btn-secondary btn-sm' %>
+                    <% end %>
+                </td>
                 </tr>
             <% end %>
         </tbody>
     </table>
-    <div class="text-center mb-3">
-        <%= link_to 'New', new_user_path, class: 'btn btn-success' %>
-    </div>
 </div>
 
   

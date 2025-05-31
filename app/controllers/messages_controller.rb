@@ -1,4 +1,6 @@
 class MessagesController < ApplicationController
+  load_and_authorize_resource
+  before_action :authenticate_user!
   def index
     @messages = Message.all
   end
@@ -9,10 +11,14 @@ class MessagesController < ApplicationController
 
   def new
     @message = Message.new
+    @chats = Chat.where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
+    @users = User.all
   end
 
   def create
     @message = Message.new(message_params)
+    @chats = Chat.where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
+    @users = User.all
     if @message.save
       redirect_to messages_path, notice: 'Message created successfully.'
     else
@@ -22,10 +28,14 @@ class MessagesController < ApplicationController
 
   def edit
     @message = Message.find(params[:id])
+    @chats = Chat.where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
+    @users = User.all
   end
 
   def update
     @message = Message.find(params[:id])
+    @chats = Chat.where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
+    @users = User.all
     if @message.update(message_params)
       redirect_to @message, notice: 'Message was successfully updated.'
     else

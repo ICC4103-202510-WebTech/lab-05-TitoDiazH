@@ -13,11 +13,13 @@
         <tbody class="text-center">
             <% @chats.each do |chat| %>
                 <tr>
-                <td><%= chat.sender_id %></td>
-                <td><%= chat.receiver_id %></td>
+                <td><%= chat.sender.full_name%></td>
+                <td><%= chat.receiver.full_name%></td>
                 <td>
                     <%= link_to 'View', chat_path(chat), class: 'btn btn-success btn-sm' %>
-                    <%= link_to 'Edit', edit_chat_path(chat), class: 'btn btn-secondary btn-sm' %>
+                    <% if can? :edit, chat %>
+                        <%= link_to 'Edit', edit_chat_path(chat), class: 'btn btn-secondary btn-sm' %>
+                    <% end %>
                 </td>
                 </tr>
             <% end %>

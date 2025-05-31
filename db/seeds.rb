@@ -23,7 +23,8 @@ first_names.each_with_index do |first_name, i|
   users << User.create!(
     email: "user#{i + 1}@example.com",
     first_name: first_name,
-    last_name: last_names[i]
+    last_name: last_names[i],
+    password: 123456
   )
 end
 

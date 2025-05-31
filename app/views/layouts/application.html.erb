@@ -27,5 +27,13 @@
     <div class="container mt-4">
         <%= yield %>
     </div>
-</body>
+
+    <!-- Puedes poner esto justo después del <body> en application.html.erb -->
+    <% if flash[:alert] %>
+      <div class="alert alert-danger text-center"><%= flash[:alert] %></div>
+    <% end %>
+    <% if flash[:notice] %>
+      <div class="alert alert-success text-center"><%= flash[:notice] %></div>
+    <% end %>
+  </body>
 </html>

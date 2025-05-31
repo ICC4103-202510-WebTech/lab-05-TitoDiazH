@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "home/index"
+  devise_for :users
   get "message/index"
   get "message/show"
   get "user/index"
@@ -16,7 +18,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+  root "home#index"
   resources :users, controller: "users"
   resources :messages, controller: "messages"
   resources :chats, controller: "chats"

@@ -9,39 +9,61 @@
 </div>
 
 <div class="row">
-  <div class="col-md-6">
-    <div class="card mb-4 border-success">
-      <div class="card-header bg-success text-white">
-        Chats Participated
+  <% if can? :edit, @user %>
+    <div class="col-md-6">
+      <div class="card mb-4 border-success">
+        <div class="card-header bg-success text-white">
+          Chats Participated
+        </div>
+        <ul class="list-group list-group-flush">
+          <% (@user.sent_chats + @user.received_chats).uniq.each do |chat| %>
+            <li class="list-group-item">
+              Chat ID: <%= link_to chat.id, chat_path(chat) %>
+              <span class="text-muted">(Sender: <%= chat.sender.first_name %>, Receiver: <%= chat.receiver.first_name %>)</span>
+            </li>
+          <% end %>
+        </ul>
       </div>
-      <ul class="list-group list-group-flush">
-        <% (@user.sent_chats + @user.received_chats).uniq.each do |chat| %>
-          <li class="list-group-item">
-            Chat ID: <%= link_to chat.id, chat_path(chat) %>
-            <span class="text-muted">(Sender: <%= chat.sender.first_name %>, Receiver: <%= chat.receiver.first_name %>)</span>
-          </li>
-        <% end %>
-      </ul>
     </div>
-  </div>
-  <div class="col-md-6">
-    <div class="card mb-4 border-success">
-      <div class="card-header bg-success text-white">
-        Sent Messages
+
+    <div class="col-md-6">
+      <div class="card mb-4 border-success">
+        <div class="card-header bg-success text-white">
+          Sent Messages
+        </div>
+        <ul class="list-group list-group-flush">
+          <% @user.messages.each do |message| %>
+            <li class="list-group-item">
+              [Chat <%= link_to message.chat_id, chat_path(message.chat) %>]:
+              <%= message.body %>
+            </li>
+          <% end %>
+        </ul>
       </div>
-      <ul class="list-group list-group-flush">
-        <% @user.messages.each do |message| %>
-          <li class="list-group-item">
-            [Chat <%= link_to message.chat_id, chat_path(message.chat) %>]:
-            <%= message.body %>
-          </li>
-        <% end %>
-      </ul>
     </div>
-  </div>
+  <% else %>
+  <div class="col-md-12">
+      <div class="card mb-4 border-success">
+        <div class="card-header bg-success text-white">
+          Chats Participated
+        </div>
+        <ul class="list-group list-group-flush">
+          <% (@user.sent_chats + @user.received_chats).uniq.each do |chat| %>
+            <li class="list-group-item">
+              Chat ID: <%= link_to chat.id, chat_path(chat) %>
+              <span class="text-muted">(Sender: <%= chat.sender.first_name %>, Receiver: <%= chat.receiver.first_name %>)</span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
 </div>
 
 <div class="text-center">
   <%= link_to 'Back', users_path, class: 'btn btn-secondary' %>
-  <%= link_to 'Edit User', edit_user_path, class: 'btn btn-success' %>
+  <% if @user == current_user %>
+    <%= link_to 'Edit User', edit_user_path, class: 'btn btn-success' %>
+  <% end %>
+
 </div>

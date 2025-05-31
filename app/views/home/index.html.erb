@@ -1,8 +1,12 @@
 <div class="container mt-5">
-  <h2 class="text-center">Welcome to WhatsNew</h2> 
-  <h2 class="text-center">Select a index</h2>
+
+  <% if user_signed_in? %>
+    <h1 class="text-center">Hello, <%= current_user.first_name %>!</h1>
+    <h2 class="text-center">Select a index</h2>
+  <% end %>
 
   <% unless user_signed_in? %>
+    <h1 class="text-center">Welcome to WhatsNew</h1> 
     <div class="d-flex justify-content-center mt-4">
       <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-success me-2' %>
       <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-outline-success' %>

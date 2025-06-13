@@ -21,7 +21,10 @@
                     <td><%= message.body %></td>
                     <td>
                         <%= link_to 'View', message_path(message), class: 'btn btn-success btn-sm' %>
-                        <%= link_to 'Edit', edit_message_path(message), class: 'btn btn-secondary btn-sm' %>
+                        <% if can? :edit, message %>
+                            <%= link_to 'Edit', edit_message_path(message), class: 'btn btn-secondary btn-sm' %>
+                            <%= link_to 'Delete', message_path(message), data: { turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this message?'}, class: 'btn btn-danger btn-sm' %>
+                        <% end %>
                     </td>
                 </tr>
                 <% end %>

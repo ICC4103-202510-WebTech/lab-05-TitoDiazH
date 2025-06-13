@@ -1,8 +1,10 @@
 class ChatsController < ApplicationController
-  load_and_authorize_resource
+  
   before_action :authenticate_user!
+  load_and_authorize_resource
+
   def index
-    @chats = Chat.all
+    @chat = Chat.participant(current_user)
   end
     
   def show
@@ -39,6 +41,12 @@ class ChatsController < ApplicationController
     end
   end
 
+  def destroy
+    @chat = Chat.find(params[:id])
+    @chat.destroy
+    redirect_to chats_path, notice: 'Chat deleted successfully.'
+  end
+  
   private
 
   def chat_params

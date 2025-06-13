@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource
+  
   before_action :authenticate_user!
+  load_and_authorize_resource
+  
   def index
+    unless current_user.admin?
+      redirect_to chats_path, alert: "You must be a admin to view the users list."
+      return
+    end
     @users = User.all
   end
     
